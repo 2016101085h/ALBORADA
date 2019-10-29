@@ -92,7 +92,7 @@ class CursoController extends Controller
         // if(!$request->ajax()) return redirect('/');    
         $curso = Curso::findOrFail($request->id);
         $curso->condicion = '0';
-        $curso->save();
+        $curso->delete();
     }
 
     public function activar(Request $request)

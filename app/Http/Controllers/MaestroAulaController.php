@@ -34,7 +34,7 @@ class MaestroAulaController extends Controller
                     'aulas.grado',
                     'maestro_aulas.condicion'
                 )
-                ->orderBy('maestro_aulas.id', 'desc')->paginate(3);
+                ->orderBy('maestro_aulas.id', 'desc')->paginate(10);
         } else {
             $maestro_aulas = MaestroAula::join('maestros', 'maestro_aulas.maestro_id', '=', 'maestros.id')->join('aulas', 'maestro_aulas.aula_id', '=', 'aulas.id')
                 ->select(
@@ -48,7 +48,7 @@ class MaestroAulaController extends Controller
                     'maestro_aulas.condicion'
                 )
                 ->where('aulas.' . $criterio, 'like', '%' . $buscar . '%')
-                ->orderBy('maestros.id', 'desc')->paginate(3);
+                ->orderBy('maestros.id', 'desc')->paginate(10);
         }
 
         return [
@@ -135,7 +135,7 @@ class MaestroAulaController extends Controller
         // if(!$request->ajax()) return redirect('/');    
         $maestro_aula = MaestroAula::findOrFail($request->id);
         $maestro_aula->condicion = '0';
-        $maestro_aula->save();
+        $maestro_aula->delete();
     }
 
     public function activar(Request $request)

@@ -13,6 +13,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="css/plantilla.css">
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <link rel="shortcut icon" href="img/logo.ico" type="image/x-icon">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -188,10 +189,10 @@
            <!-- Menu Footer-->
            <li class="user-footer">
              <div class="pull-left">
-               <a href="#" class="btn btn-info float-left">Profile</a>
+               <a href="#" class="btn btn-info float-left"><i class="far fa-id-badge mr-1 "></i> Profile</a>
              </div>
              <div class="pull-right">
-               <a href="{{ route('logout')}} " onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-danger float-right">Cerrar Sesión</a>
+               <a href="{{ route('logout')}} " onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-danger float-right"><i class="fas fa-sign-out-alt mr-1"></i> Cerrar Sesión</a>
                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         {{ csrf_field() }}
                 </form>

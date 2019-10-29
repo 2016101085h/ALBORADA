@@ -215,10 +215,10 @@
            </form>
          </div>
          <div class="modal-footer">
-           <button  @click="cerrarModal()" type="button" class="btn btn-danger" >Cerrar</button>
-           <button v-if="tipoAccion==1" type="button" @click="registrarCompetencia()" class="btn btn-primary">Guardar</button>
-           <button v-if="tipoAccion==2" type="button" class="btn btn-primary" @click="actualizarCompetencia()">Actualizar</button>
-           <button v-if="tipoAccion==3" type="button" class="btn btn-primary" @click="seleccionarCurso()">Seleccionar</button>
+           <button  @click="cerrarModal()" type="button" class="btn btn-danger" ><i class="fas fa-window-close mr-1"></i> Cerrar</button>
+           <button v-if="tipoAccion==1" type="button" @click="registrarCompetencia()" class="btn btn-primary"><i class="fas fa-sign-in-alt mr-1"></i>  Guardar</button>
+           <button v-if="tipoAccion==2" type="button" class="btn btn-primary" @click="actualizarCompetencia()"><i class="fas fa-pen-alt mr-1"></i> Actualizar</button>
+           <button v-if="tipoAccion==3" type="button" class="btn btn-primary" @click="seleccionarCurso()"><i class="fas fa-hand-pointer mr-1"></i> Seleccionar</button>
          </div>
        </div>
        <!-- /.modal-content -->
@@ -416,7 +416,7 @@
                 })
 
                 swalWithBootstrapButtons.fire({
-                title: 'Esta de seguro de desactivar esta Competencia?',
+                title: 'Esta de seguro de eliminar esta Competencia?',
                 
                 type: 'warning',
                 showCancelButton: true,
@@ -436,8 +436,8 @@
                         me.buscarCurso(1);
                         
                           swalWithBootstrapButtons.fire(
-                            'Desactivado!',
-                            'El registro ha sido desactivado con exito.',
+                            'Eliminado!',
+                            'El registro ha sido eliminado con exito.',
                             'success'
                             )
                     }).catch(function(error){

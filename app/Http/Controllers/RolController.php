@@ -88,7 +88,7 @@ class RolController extends Controller
         // if(!$request->ajax()) return redirect('/');    
         $rol = Rol::findOrFail($request->id);
         $rol->condicion = '0';
-        $rol->save();
+        $rol->delete();
     }   
 
     public function activar(Request $request)

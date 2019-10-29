@@ -75,7 +75,7 @@
                         </button>
                         </template>
                     </td>
-                    <td v-text="maestroaula.nombre + ' '+maestroaula.apellido  "></td>
+                    <td v-text="maestroaula.apellido + ', '+maestroaula.nombre  "></td>
                     <td v-text="maestroaula.grado "></td>
                     <td v-text="maestroaula.seccion "></td>
                    
@@ -156,7 +156,7 @@
                 <div class="col-md-9">
                     <select v-model="maestro_id" class="form-control">
                         <option value="1" disabled>Selecciona el Maestro</option>
-                        <option v-for="maestro in arrayMaestro " :key="maestro.id" :value="maestro.id" v-text="maestro.nombre+' '+maestro.apellido"></option>
+                        <option v-for="maestro in arrayMaestro " :key="maestro.id" :value="maestro.id" v-text="maestro.apellido+', '+maestro.nombre"></option>
                         
                         
                     </select>                                    
@@ -217,9 +217,9 @@
            </form>
          </div>
          <div class="modal-footer">
-           <button  @click="cerrarModal()" type="button" class="btn btn-danger" >Cerrar</button>
-           <button v-if="tipoAccion==1" type="button" @click="registrarMaestroAula()" class="btn btn-primary">Guardar</button>
-           <button v-if="tipoAccion==2" type="button" class="btn btn-primary" @click="actualizarMaestroAula()">Actualizar</button>
+           <button  @click="cerrarModal()" type="button" class="btn btn-danger" ><i class="fas fa-window-close mr-1"></i> Cerrar</button>
+           <button v-if="tipoAccion==1" type="button" @click="registrarMaestroAula()" class="btn btn-primary"><i class="fas fa-sign-in-alt mr-1"></i> Guardar</button>
+           <button v-if="tipoAccion==2" type="button" class="btn btn-primary" @click="actualizarMaestroAula()"><i class="fas fa-pen-alt mr-1"></i> Actualizar</button>
          </div>
        </div>
        <!-- /.modal-content -->
@@ -430,7 +430,7 @@
                 })
 
                 swalWithBootstrapButtons.fire({
-                title: 'Esta de seguro de desactivar este Alumno?',
+                title: 'Esta de seguro de de eliminar este registro?',
                 
                 type: 'warning',
                 showCancelButton: true,
@@ -448,8 +448,8 @@
                         
                         me.listarMaestroAula(1,'','nombre');
                           swalWithBootstrapButtons.fire(
-                            'Desactivado!',
-                            'El registro ha sido desactivado con exito.',
+                            'Eliminado!',
+                            'El registro ha sido eliminado con exito.',
                             'success'
                             )
                     }).catch(function(error){

@@ -91,7 +91,7 @@ class AulaController extends Controller
           // if(!$request->ajax()) return redirect('/');    
         $aula = Aula::findOrFail($request->id);
         $aula->condicion = '0';
-        $aula->save();
+        $aula->delete();
     }
 
     public function activar(Request $request){

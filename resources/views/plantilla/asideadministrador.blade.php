@@ -16,7 +16,8 @@
           <img src="img/usuario/{{Auth::user()->imagen}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block text-uppercase">{{ Auth::user()->usuario}}</a>
+          <a href="#" class="d-inline-block mr-5 text-uppercase">{{ Auth::user()->usuario}}</a>
+          <a href="#" style="font-size:0.8rem"><i class="fa fa-circle text-success "></i> Online</a>
           
         </div>
         
@@ -92,10 +93,26 @@
                   <p>Maestro</p>
                 </a>
               </li>
+             
+              
+            
+            </ul>
+          </li>
+           <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+             
+              <i class="nav-icon fas fa-graduation-cap"></i>
+              <p>
+                Estudiantes
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              
                <li @click="menu=6" class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Alumnos</p>
+                  <p>General</p>
                 </a>
               </li>
               
@@ -157,7 +174,7 @@
           </li>
            <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="fas fa-user-edit"></i>
+              <i class="fas fa-user-edit nav-icon"></i>
               <p>
                 Notas
                 <i class="fas fa-angle-left right"></i>

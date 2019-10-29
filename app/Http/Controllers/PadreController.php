@@ -81,16 +81,16 @@ class PadreController extends Controller
 
         // if(!$request->ajax()) return redirect('/');
 
-        $Padre = new Estudiante();
-        $estudiante->aula_id          = $request->aula_id;
-        $estudiante->nombre          = $request->nombre;
-        $estudiante->apellido        = $request->apellido;
-        $estudiante->fech_nacimiento        = $request->fech_nacimiento;
-        $estudiante->sexo              = $request->sexo;
-        $estudiante->dni              = $request->dni;
-        $estudiante->direccion       = $request->direccion;
-        $estudiante->condicion         = '1';
-        $estudiante->save();
+        $padre = new Estudiante();
+        $padre->aula_id          = $request->aula_id;
+        $padre->nombre          = $request->nombre;
+        $padre->apellido        = $request->apellido;
+        $padre->fech_nacimiento        = $request->fech_nacimiento;
+        $padre->sexo              = $request->sexo;
+        $padre->dni              = $request->dni;
+        $padre->direccion       = $request->direccion;
+        $padre->condicion         = '1';
+        $padre->save();
     }
 
 
@@ -123,7 +123,7 @@ class PadreController extends Controller
         // if(!$request->ajax()) return redirect('/');    
         $estudiante = Estudiante::findOrFail($request->id);
         $estudiante->condicion = '0';
-        $estudiante->save();
+        $estudiante->delete();
     }
 
     public function activar(Request $request)

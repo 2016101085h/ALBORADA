@@ -168,9 +168,9 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button  @click="cerrarModal()" type="button" class="btn btn-danger" >Cerrar</button>
-            <button v-if="tipoAccion==1" type="button" @click="registrarRol()" class="btn btn-primary">Guardar</button>
-            <button v-if="tipoAccion==2" type="button" class="btn btn-primary" @click="actualizarRol()">Actualizar</button>
+            <button  @click="cerrarModal()" type="button" class="btn btn-danger" ><i class="fas fa-window-close mr-1"></i> Cerrar</button>
+            <button v-if="tipoAccion==1" type="button" @click="registrarRol()" class="btn btn-primary"><i class="fas fa-sign-in-alt mr-1"></i> Guardar</button>
+            <button v-if="tipoAccion==2" type="button" class="btn btn-primary" @click="actualizarRol()"><i class="fas fa-pen-alt mr-1"></i> Actualizar</button>
           </div>
         </div>
         <!-- /.modal-content -->
@@ -335,7 +335,7 @@
                   })
 
                   swalWithBootstrapButtons.fire({
-                  title: 'Esta de seguro de desactivar este Rol?',
+                  title: 'Esta de seguro de eliminar este Rol?',
                   
                   type: 'warning',
                   showCancelButton: true,
@@ -353,8 +353,8 @@
                           
                           me.listarRol(1,'','nombre');
                             swalWithBootstrapButtons.fire(
-                              'Desactivado!',
-                              'El registro ha sido desactivado con exito.',
+                              'Eliminado!',
+                              'El registro ha sido eliminado con exito.',
                               'success'
                               )
                       }).catch(function(error){

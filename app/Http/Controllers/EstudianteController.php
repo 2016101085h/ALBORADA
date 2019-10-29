@@ -33,7 +33,7 @@ class EstudianteController extends Controller
                     'estudiantes.direccion',
                     'estudiantes.condicion'
                 )
-                ->orderBy('estudiantes.id', 'asc')->paginate(5);
+                ->orderBy('estudiantes.id', 'asc')->paginate(10);
         } else {
             $estudiantes = Estudiante::join('aulas', 'estudiantes.aula_id', '=', 'aulas.id')
                 ->select(
@@ -50,7 +50,7 @@ class EstudianteController extends Controller
                     'estudiantes.condicion'
                 )
                 ->where('estudiantes.' . $criterio, 'like', '%' . $buscar . '%')
-                ->orderBy('estudiantes.id', 'asc')->paginate(2);
+                ->orderBy('estudiantes.id', 'asc')->paginate(10);
             // $estudiantes = Estudiante::where($criterio, 'like', '%' . $buscar . '%')->orderBy('id', 'desc')->paginate(2);
         }
         return [
@@ -158,7 +158,7 @@ class EstudianteController extends Controller
         // if(!$request->ajax()) return redirect('/');    
         $estudiante = Estudiante::findOrFail($request->id);
         $estudiante->condicion = '0';
-        $estudiante->save();
+        $estudiante->delete();
     }
 
     public function activar(Request $request)

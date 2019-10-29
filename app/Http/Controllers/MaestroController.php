@@ -22,9 +22,9 @@ class MaestroController extends Controller
         $criterio = $request->criterio;
 
         if ($buscar == '') {
-            $maestros = Maestro::orderBy('id', 'desc')->paginate(3);
+            $maestros = Maestro::orderBy('id', 'desc')->paginate(10);
         } else {
-            $maestros = Maestro::where($criterio, 'like', '%' . $buscar . '%')->orderBy('id', 'desc')->paginate(3);
+            $maestros = Maestro::where($criterio, 'like', '%' . $buscar . '%')->orderBy('id', 'desc')->paginate(10);
         }
 
 
@@ -102,7 +102,7 @@ class MaestroController extends Controller
         // if (!$request->ajax()) return redirect('/');
         $maestro = Maestro::findOrFail($request->id);
         $maestro->condicion = '0';
-        $maestro->save();
+        $maestro->delete();
     }
 
     public function activar(Request $request)

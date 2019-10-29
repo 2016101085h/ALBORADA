@@ -44,8 +44,8 @@
                 <table class="table table-bordered  table-sm  ">
                   <tr class="bg-info text-center ">
                     <th>Opciones</th>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
+                    <th>Apellidos y Nombres</th>
+                    <!-- <th>Apellidos</th> -->
                     <th>Fecha de Nacimiento</th>
                     <th>Sexo</th>
                     <th>Grado de Instruccion</th>
@@ -72,9 +72,9 @@
                         </button>
                         </template>
                     </td>
-                    <td v-text="maestro.nombre"></td>
-                    <td v-text="maestro.apellido"></td>
-                    <td v-text="maestro.fech_nacimiento"></td>
+                    <td v-text="maestro.apellido+', '+maestro.nombre"></td>
+                    
+                    <td v-text="moment(maestro.fech_nacimiento).format('DD-MM-YYYY')"></td>
                     <td v-text="maestro.sexo"></td>
                     <td v-text="maestro.grado_instruccion"></td>
                     <td v-text="maestro.dni"></td>
@@ -220,9 +220,9 @@
            </form>
          </div>
          <div class="modal-footer">
-           <button  @click="cerrarModal()" type="button" class="btn btn-danger" >Cerrar</button>
-           <button v-if="tipoAccion==1" type="button" @click="registrarMaestro()" class="btn btn-primary">Guardar</button>
-           <button v-if="tipoAccion==2" type="button" class="btn btn-primary" @click="actualizarMaestro()">Actualizar</button>
+           <button  @click="cerrarModal()" type="button" class="btn btn-danger" ><i class="fas fa-window-close mr-1"></i>  Cerrar</button>
+           <button v-if="tipoAccion==1" type="button" @click="registrarMaestro()" class="btn btn-primary"><i class="fas fa-sign-in-alt mr-1"></i> Guardar</button>
+           <button v-if="tipoAccion==2" type="button" class="btn btn-primary" @click="actualizarMaestro()"><i class="fas fa-pen-alt mr-1"></i>  Actualizar</button>
          </div>
        </div>
        <!-- /.modal-content -->
@@ -230,30 +230,7 @@
      <!-- /.modal-dialog -->
    </div>
    <!--Fin del modal-->
-   <!-- Inicio del modal Eliminar -->
-   <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     style="display: none;" aria-hidden="true">
-     <div class="modal-dialog modal-danger" role="document">
-       <div class="modal-content">
-         <div class="modal-header">
-           <h4 class="modal-title">Eliminar Categoría</h4>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">×</span>
-           </button>
-         </div>
-         <div class="modal-body">
-           <p>Estas seguro de eliminar el Maestro?</p>
-         </div>
-         <div class="modal-footer">
-           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-           <button type="button" class="btn btn-danger">Eliminar</button>
-         </div>
-       </div>
-       <!-- /.modal-content -->
-     </div>
-     <!-- /.modal-dialog -->
-   </div>
-   <!-- Fin del modal Eliminar -->
+  
 
   </main>
  
@@ -261,9 +238,12 @@
 </template>
 
 <script>
+var moment = require('moment');
+moment().format()
     export default {
         data(){
             return{
+              moment,
                 maestro_id:'',
                 nombre:'',
                 apellido:'',
@@ -403,7 +383,7 @@
                 })
 
                 swalWithBootstrapButtons.fire({
-                title: 'Esta de seguro de desactivar este Maestro?',
+                title: 'Esta de seguro de eliminar este Maestro?',
                 
                 type: 'warning',
                 showCancelButton: true,
@@ -421,8 +401,8 @@
                         
                         me.listarMaestro(1,'','nombre');
                           swalWithBootstrapButtons.fire(
-                            'Desactivado!',
-                            'El registro ha sido desactivado con exito.',
+                            'Elimiando!',
+                            'El registro ha sido eliminado con exito.',
                             'success'
                             )
                     }).catch(function(error){

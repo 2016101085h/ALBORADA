@@ -198,7 +198,7 @@ class UserController extends Controller
         // if (!$request->ajax()) return redirect('/');
         $user = User::findOrFail($request->id);
         $user->condicion = '0';
-        $user->save();
+        $user->delete();
     }
 
     public function activar(Request $request)

@@ -135,42 +135,7 @@
          
             
             
-            <!-- <div class="form-group row">
-                <label class="col-md-3 form-control-label" for="text-input">Sección</label>
-                <div class="col-md-9">
-                    <select v-model="seccion_grado" class="form-control">
-                        <option value="2" disabled>Selecciona la Sección</option>
-                        <option v-for="grado in arrayGrado " :key="grado.id" :value="grado.id" v-text="grado.seccion"></option>
-                        
-                        
-                    </select>                                    
-                </div>
-            </div>  -->
-            <!-- <div class="form-group row">
-                <label class="col-md-3 form-control-label" for="text-input">Turno</label>
-                <div class="col-md-9">
-                    <select v-model="turno_grado" class="form-control">
-                        <option value="3" disabled>Selecciona el Turno</option>
-                        <option v-for="grado in arrayGrado " :key="grado.id" :value="grado.id" v-text="grado.turno"></option>
-                        
-                        
-                    </select>                                    
-                </div>
-            </div>  -->
-             
-              <!-- <div class="form-group row">
-               <label class="col-md-3 form-control-label" for="email-input">Sexo</label>
-               <div class="col-md-9">
-                 <input type="text" v-model="sexo" class="form-control" placeholder="Ingrese el sexo">
-               </div>
-             </div>  -->
             
-             <!-- <div class="form-group row">
-               <label class="col-md-3 form-control-label" for="email-input">Grado de Intrucción</label>
-               <div class="col-md-9">
-                 <input type="text" v-model="grado_instruccion" class="form-control" placeholder="Ingrese el grado de instruccion">
-               </div>
-             </div> -->
               
              
            
@@ -185,9 +150,9 @@
            </form>
          </div>
          <div class="modal-footer">
-           <button  @click="cerrarModal()" type="button" class="btn btn-danger" >Cerrar</button>
-           <button v-if="tipoAccion==1" type="button" @click="registrarCurso()" class="btn btn-primary">Guardar</button>
-           <button v-if="tipoAccion==2" type="button" class="btn btn-primary" @click="actualizarCurso()">Actualizar</button>
+           <button  @click="cerrarModal()" type="button" class="btn btn-danger" ><i class="fas fa-window-close mr-1"></i>  Cerrar</button>
+           <button v-if="tipoAccion==1" type="button" @click="registrarCurso()" class="btn btn-primary"><i class="fas fa-sign-in-alt mr-1"></i> Guardar</button>
+           <button v-if="tipoAccion==2" type="button" class="btn btn-primary" @click="actualizarCurso()"><i class="fas fa-pen-alt mr-1"></i> Actualizar</button>
          </div>
        </div>
        <!-- /.modal-content -->

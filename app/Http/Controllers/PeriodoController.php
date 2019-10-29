@@ -81,7 +81,7 @@ class PeriodoController extends Controller
         // if(!$request->ajax()) return redirect('/');    
         $grado = Periodo::findOrFail($request->id);
         $grado->condicion = '0';
-        $grado->save();
+        $grado->delete();
     }
 
     public function activar(Request $request)

@@ -71,20 +71,23 @@ class NotaController extends Controller
     {
         $select_aula = $request->aula_id;
         $select_curso = $request->curso_id;
+        $select_periodo = $request->curso_id;
 
         $estudiantes = Estudiante::where('aula_id', '=', $select_aula)->select('id', 'nombre', 'apellido')->orderBy('apellido', 'asc')->get();
         //Select Competencias
         $competencias = Competencia::where('competencias.curso_id', '=', $select_curso)->get();
-        $cursoSelected = Curso::findOrFail($request->curso_id);
-        $aulaSelected = Aula::findOrFail($request->aula_id);
-         $mastroSelected = MaestroAula::join('maestros','maestro_aulas.maestro_id','=','maestros.id')->select('maestro_aulas.id','maestros.nombre as nombre_maestro','maestros.apellido as apellido_maestro')->where('maestro_aulas.aula_id', '=', $select_aula)->first();
-
+        $cursoSelected = Curso::findOrFail($select_curso);
+        $aulaSelected = Aula::findOrFail($select_aula);
+        // $mastroSelected = Maestro::findOrFail($select_aula);
+        $mastroSelected = MaestroAula::join('maestros','maestro_aulas.maestro_id','=','maestros.id')->select('maestro_aulas.id','maestros.nombre as nombre_maestro','maestros.apellido as apellido_maestro')->where('maestro_aulas.aula_id', '=', $select_aula)->first();
+        $periodSelected = Periodo::findOrFail($select_periodo);
         return [
             'competencias' => $competencias,
             'estudiantes' => $estudiantes,
             'cursoSelected' => $cursoSelected,
             'aulaSelected' => $aulaSelected,
-            'maestroSelected' => $mastroSelected
+            'maestroSelected' => $mastroSelected,
+            'periodoSelected' => $periodSelected
         ];
     }
 
@@ -141,7 +144,7 @@ class NotaController extends Controller
         // if(!$request->ajax()) return redirect('/');    
         $nota = Nota::findOrFail($request->id);
         $nota->condicion = '0';
-        $nota->save();
+        $nota->delete();
     }
 
     public function activar(Request $request)

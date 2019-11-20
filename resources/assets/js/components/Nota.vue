@@ -97,19 +97,25 @@
                     <th style="line-height:50px">Opciones</th>                               
                   </tr>
 
-                  <tr v-for="(estudiante, index) in arrayEstudiantes" :key="estudiante.id">
+                  <tr v-for="(estudiante, index) in arrayEstudiantes1" :key="estudiante.id">
                     <td v-text="index+1"  style="width:20px; text-align:center; font-weight:900"></td>
                     <!-- <td v-text="index+1"  style="background-color:#E7CDB7"></td> -->
                     <td v-text="estudiante.apellido + ', ' + estudiante.nombre" ></td>
-                    <td v-for="(nota, index) in estudiante.nota" :key="nota.id" >
+                    
                         <!-- <input type="number" v-model.number="estudiante.nota[index]"v-bind:class= "[estudiante.nota[index]<=10 ? 'text-danger' : 'text-primary']" style="width:50px; border-radius:5px; border:1px solid black; text-align:center"> -->
                         <!-- <span v-show="estudiante.nota[index] = ''"></span> -->
-                        <input v-text="estudiante.nota[index]" v-bind:class= "[estudiante.nota[index]=='C' ? 'text-danger' : 'text-primary']" class="form-control">
-                          <!-- <option value="" disabled></option> -->
+                        
+                       <td v-for="(nota, index) in estudiante.nota" :key="nota.id" >
+                              <!-- <input type="number" v-model.number="estudiante.nota[index]"v-bind:class= "[estudiante.nota[index]<=10 ? 'text-danger' : 'text-primary']" style="width:50px; border-radius:5px; border:1px solid black; text-align:center"> -->
+                              <!-- <span v-show="estudiante.nota[index] = ''"></span> -->
+                              <p v-text="estudiante.nota[index]" v-bind:class= "[estudiante.nota[index]=='C' ? 'text-danger' : 'text-primary']" class="form-control">
+                                
+                              </p>
+                          </td>
                           
                         
-                    </td>
-                    <td class="bg-secondary text-center" >
+                 
+                    <td class=" text-center" >
                       <button type="button" @click="abrirModal('periodo','actualizar',periodo)" class="btn btn-warning btn-sm" 
                           >
                           <i class="fa fa-pen"></i>
@@ -183,7 +189,7 @@
          </div>
          <div class="modal-footer">
            <button  @click="cerrarModal()" type="button" class="btn btn-danger" ><i class="fas fa-window-close mr-1"></i> Cerrar</button>
-           <button v-if="tipoAccion==1" type="button" @click="abrirEstudiantes()" class="btn btn-primary"><i class="fas fa-sign-in-alt mr-1"></i> Ingresar</button>
+           <button v-if="tipoAccion==1" type="button" @click="selectNota(),abrirEstudiantes()" class="btn btn-primary"><i class="fas fa-sign-in-alt mr-1"></i> Ingresar</button>
            <button v-if="tipoAccion==2" type="button" class="btn btn-primary" @click="actualizarNota()"><i class="fas fa-pen-alt mr-1"></i> Actualizar</button>
          </div>
          </template>
@@ -273,8 +279,10 @@
             competencia_id: 0,
             arrayAulas: [],
             arrayEstudiantes: [],
+            arrayEstudiantes1: [],
             arrayCursos: [],
             arrayCompetencias: [],
+            arrayCompetencias1: [],
             arrayPeriodos: [],
             arrayNotas: [],
            
@@ -301,9 +309,9 @@
             
            
           },
-          selectNota(){
+          selectNota(aula_id=this.aula_id,periodo_id=this.periodo_id,curso_id=this.curso_id){
             let me= this;
-            var url = '/nota';
+            var url = '/nota?aula_id=' + aula_id + '&curso_id=' + curso_id+'&periodo_id='+periodo_id;
 
             axios.get(url).then(function (response){
               var respuesta = response.data;
@@ -312,7 +320,24 @@
               me.arrayCursos = respuesta.cursos;
               me.arrayPeriodos = respuesta.periodos;
               me.arrayNotas = respuesta.notas;
+              me.arrayEstudiantes1 = respuesta.estudiantes;
+              me.arrayCompetencias1 = respuesta.competencias;
+             
+                  
+               for(let i=0;i<me.arrayEstudiantes1.length;i++){
+                     me.arrayEstudiantes1[i]['nota']={};
+                    
+
+                        for(let j=0;j<me.arrayCompetencias1.length;j++){
+
+                          me.arrayEstudiantes1[i]['nota']['nota'+j]= me.arrayNotas[j+4*i]['calificacion'];
+
+                          }
+                            
+                }
+                    
               console.log(response);
+           
               
               
             })
@@ -379,6 +404,7 @@
                       timer: 2500
                     })
                     me.orden=0;
+                       me.abrirEstudiantes(me.aula_id,me.curso_id,me.periodo_id);
 
                   }).catch(function (error) {
                     console.log(error);
@@ -392,6 +418,8 @@
 
                         for(let j=0;j<this.arrayCompetencias.length;j++){
                             if (this.arrayEstudiantes[i]['nota']['nota'+j] == '') this.errorMostrarMsjNota = 'Ninguna nota puede estar vacía si desea registrar notas';
+                            else
+                            {this.errorMostrarMsjNota = '';}
                         }
                         
                     }
@@ -439,15 +467,15 @@
             },
             cerrarModal(){
                 this.modal=0;   
-                this.aula_id = '0';             
-                this.curso_id = '1';             
-                this.periodo_id = '2';
+                // this.aula_id = '0';             
+                // this.curso_id = '1';             
+                // this.periodo_id = '2';
                             
             }
         },
           
         mounted(){
-          this.selectNota();
+          this.selectNota(this.aula_id,this.curso_id,this.periodo_id);
           this.abrirEstudiantes(this.aula_id, this.curso_id, this.periodo_id);
         }
     }

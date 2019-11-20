@@ -17,16 +17,22 @@ class NotaController extends Controller
         //Select Aula
         $aulas = Aula::all();
         //Select Cursos
-        $cursos = Curso::all();
+         $cursos = Curso::all();
         //Select Alumno
         $periodos = Periodo::all();
+        $curso_id = $request->curso_id;
+        $periodo_id = $request->periodo_id;
+        $aula_id = $request->aula_id;
+        $estudiantes = Estudiante::where('aula_id', '=', $aula_id)->select('id', 'nombre', 'apellido')->orderBy('apellido', 'asc')->get();
+        $competencias = Competencia::where('competencias.curso_id', '=', $curso_id)->orderBy('id','asc')->get();
 
         $notas = Nota::join('competencias', 'notas.competencia_id', '=', 'competencias.id')->
         join('estudiantes', 'notas.estudiante_id', '=', 'estudiantes.id')->
         join('cursos', 'notas.curso_id', '=', 'cursos.id')->
         join('periodos', 'notas.periodo_id', '=', 'periodos.id')->
-        select('competencias.nombre as competencia', 'estudiantes.nombre', 'estudiantes.apellido', 'cursos.nombre as curso', 'periodos.nombre as periodo', 'notas.calificacion', 'notas.condicion')
-        ->orderBy('notas.estudiante_id','asc')->get();
+        join('aulas', 'notas.aula_id', '=', 'aulas.id')->
+        select('notas.estudiante_id','notas.calificacion')->where('notas.curso_id','=',$curso_id)->where('notas.aula_id','=',$aula_id)->where('notas.periodo_id','=',$periodo_id)
+        ->orderBy('estudiantes.id','asc')->get();
         return [
             // 'pagination' => [
             //     'total' => $notas->total(),
@@ -37,9 +43,11 @@ class NotaController extends Controller
             //     'to' => $notas->lastItem(),
             // ],
             'notas'    => $notas,
-            'periodos' => $periodos,
+          'periodos' => $periodos,
             'cursos' => $cursos,
-            'aulas' => $aulas
+             'aulas' => $aulas,
+             'estudiantes' => $estudiantes,
+             'competencias' => $competencias
         ];
     }
     public function listarPdf(Request $request )
@@ -71,11 +79,11 @@ class NotaController extends Controller
     {
         $select_aula = $request->aula_id;
         $select_curso = $request->curso_id;
-        $select_periodo = $request->curso_id;
+        $select_periodo = $request->periodo_id;
 
         $estudiantes = Estudiante::where('aula_id', '=', $select_aula)->select('id', 'nombre', 'apellido')->orderBy('apellido', 'asc')->get();
         //Select Competencias
-        $competencias = Competencia::where('competencias.curso_id', '=', $select_curso)->get();
+        $competencias = Competencia::where('competencias.curso_id', '=', $select_curso)->orderBy('id','asc')->get();
         $cursoSelected = Curso::findOrFail($select_curso);
         $aulaSelected = Aula::findOrFail($select_aula);
         // $mastroSelected = Maestro::findOrFail($select_aula);
@@ -103,6 +111,7 @@ class NotaController extends Controller
                 $nota->estudiante_id          = $d['id'];
                 $nota->curso_id          = $request->curso_id;
                 $nota->periodo_id          = $request->periodo_id;
+                $nota->aula_id         =  $request->aula_id;
                 $nota->calificacion          = $d['nota']['nota' . $i];
                 $nota->condicion         = '1';
                 $nota->save();

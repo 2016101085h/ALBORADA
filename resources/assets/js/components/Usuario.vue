@@ -1,7 +1,14 @@
 <template>
     
   <main class="content-wrapper">
-       
+            
+  
+
+        
+          
+        
+     
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -38,70 +45,57 @@
                         
                       </select>
                       <input type="text" v-model="buscar" @keyup.enter="listarPersona(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
-                      <button type="submit" @click="listarPersona(1,buscar,criterio)" class="btn btn-warning text-white rounded-0"><i class="fa fa-search"></i> Buscar</button>
+                      <button type="submit" @click="listarPersona(1,buscar,criterio)" class="btn btn-warning text-white "><i class="fa fa-search"></i> Buscar</button>
                     </div>
                   </div>
                 </div>
-                <table class="table table-bordered  table-sm  ">
-                  <tr class="bg-info text-center ">
-                    <th>Opciones</th>
-                    <th>Nombre</th>
-                    <th>Fecha de Nacimiento</th>
-                    <th>Sexo</th>
-                    <th>DNI</th>
-                    <th>Numero de Celular</th>
-                    <th>Dirección</th>
-                    <th>Imagen</th>
-                    <th>Nombre de Usuario</th>                                 
-                    <th>Nombre de Rol</th>                                 
-                    <th >Estado</th>
+              
+                  <div class="row d-flex justify-content-between pt-4">
+                   <div class="col-md-3 col-sm-6" v-for="persona in arrayPersona" :key="persona.id">
+                     <div  class="card card-secondary card-outline  bg-light " >
+                      <div class="card-body box-profile">
+                          <div class="text-center  p-2">
+                            <div class=" p-1" style="background-color:#00c0ef; border-radius:20px">
+                                <p class="text-center text-bold h4 text-uppercase text-white">{{persona.nombre +' '+persona.apellido}}</p>
+                            <p style="margin-bottom:0px" class="text-muted">({{persona.rol}})</p>
+                            </div>
+                            <img class="profile-user-img img-fluid img-circle my-2"
+                               :src="'img/usuario/' + persona.imagen"
+                                alt="foto de perfil de usuario" title="imagen de usuario" width="100px" height="100px">
+                          </div>
 
-                  </tr>
-                  <tr v-for="persona in arrayPersona" :key="persona.id">
-                    <td >
-                        <button type="button" @click="abrirModal('persona','actualizar',persona)" class="btn btn-warning btn-sm" 
-                          >
-                          <i class="fa fa-pen"></i>
-                        </button> &nbsp;
-                        <template v-if="persona.condicion">
+                          <h3 class="profile-username text-center">Usuario: <span class="text-muted">{{persona.usuario}}</span></h3>
+                          <h3 class="profile-username text-center">DNI: <span class="text-muted">{{persona.dni}}</span></h3>
+                         
+                          
+
+                          <ul class="list-group list-group-unbordered ">
+                          
+                    
+                            <li class="list-group-item d-flex justify-content-around bg-light">
+                                      <a href="#" class="btn btn-warning btn-inline-block " @click="abrirModal('persona','actualizar',persona)" ><b> <i class="fa fa-pen text-white"></i></b></a>
+                                       <p v-if="persona.condicion == 1" class="h5 text-center"> <span class="badge badge-pill badge-success   ">Activo</span></p>
+                          <p v-if="persona.condicion == 0" class="h5 text-center"> <span class="badge badge-pill badge-primary   ">Inactivo</span></p>
+                                      <template v-if="persona.condicion">
                          <button type="button" class="btn btn-danger btn-sm" @click="desactivarPersona(persona.id)">
                           <i class="fa fa-trash"></i>
                         </button>
                         </template>
+                        
                         <template v-else>
-                         <button type="button" class="btn btn-primary btn-sm" @click="activarPersona(persona.id)">
+                         <button type="button" class="btn btn-secondary btn-sm" @click="activarPersona(persona.id)">
                           <i class="fa fa-check"></i>
                         </button>
                         </template>
-                    </td>
-                    <td v-text="persona.nombre + ' ' + persona.apellido "></td>
-                    <td v-text=" moment(persona.fech_nacimiento ).format('DD-MM-YYYY')" ></td>
-                    <td v-text="persona.sexo "></td>
-                    <td v-text="persona.dni "></td>
-                    <td v-text="persona.num_celular "></td>
-                    <td v-text="persona.direccion "></td>
-                     <td>
-                        <img :src="'img/usuario/' + persona.imagen" class="img-fluid" width="100px" height="100px">
-                    </td>
-                    <td v-text="persona.usuario "></td>
-                    <td v-text="persona.rol "></td>
-        
+                                      <!-- <b href="#" class="btn btn-primary btn-inline-block"><b> <i class="fa fa-pen"></i></b></a> -->
                                 
-                    
-                    
-                    <td>
-                        <div v-if="persona.condicion">
-                            <span class="badge bg-success">Activo</span>
-                        </div>
-                        <div v-else>
-                            <span class="badge bg-danger">Inactivo</span>
-                        </div>
-                    </td>
-                  </tr>
-                 
-                  
-                  
-                </table>
+                            </li>
+                          </ul>
+                      </div>
+            
+                  </div>
+                   </div>
+                </div>
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
@@ -290,6 +284,8 @@
    <!--Fin del modal-->
    
    <!-- Fin del modal Eliminar -->
+   <!-- Profile Image -->
+           
 
   </main>
  

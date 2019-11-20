@@ -45,13 +45,13 @@
                <h1 class="content-wrapper">Contenido del menu 13</h1>
             </template>
             <template v-if="menu==14">
-            
+               <calendario></calendario>
             </template>
             <template v-if="menu==15">
                <h1 class="content-wrapper">Contenido del menu 15</h1>
             </template>
             <template v-if="menu==16">
-               <h1 class="content-wrapper">Contenido del menu 16</h1>
+               <prueba></prueba>
             </template>
             @elseif (Auth::user()->rol_id == 2)
              <template v-if="menu==0">

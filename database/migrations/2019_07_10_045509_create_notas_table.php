@@ -19,6 +19,7 @@ class CreateNotasTable extends Migration
             $table->integer('estudiante_id')->unsigned();
             $table->integer('curso_id')->unsigned();
             $table->integer('periodo_id')->unsigned();
+            $table->integer('aula_id')->unsigned();
             $table->string('calificacion');
             $table->boolean('condicion')->default(1);
             $table->timestamps();
@@ -26,6 +27,7 @@ class CreateNotasTable extends Migration
             $table->foreign('estudiante_id')->references('id')->on('estudiantes')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('curso_id')->references('id')->on('cursos')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('periodo_id')->references('id')->on('periodos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('aula_id')->references('id')->on('aulas')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

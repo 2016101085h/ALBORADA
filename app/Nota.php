@@ -8,7 +8,7 @@ class Nota extends Model
 {
     //
     protected $fillable = [
-        'competencia_id', 'estudiante_id', 'curso_id', 'periodo_id', 'calificacion', 'condicion'
+        'competencia_id', 'estudiante_id', 'curso_id', 'aula_id', 'periodo_id', 'calificacion', 'condicion'
     ];
     // $table->increments ('id');
     // $table->integer('competencia_id')->unsigned();

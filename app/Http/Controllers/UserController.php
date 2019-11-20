@@ -35,7 +35,7 @@ class UserController extends Controller
                     'users.imagen',
                     'rols.nombre as rol'
                 )
-                ->orderBy('personas.id', 'desc')->paginate(5);
+                ->orderBy('personas.id', 'desc')->paginate(6);
         } else {
             $personas = User::join('personas', 'users.id', '=', 'personas.id')
                 ->join('rols', 'users.rol_id', '=', 'rols.id')
@@ -140,7 +140,7 @@ class UserController extends Controller
             $persona = Persona::findOrFail($user->id);
 
             $persona->nombre = $request->nombre;
-            $persona->apellido = $request->tipo_documento;
+            $persona->apellido = $request->apellido;
             $persona->sexo = $request->sexo;
             $persona->fech_nacimiento = $request->fech_nacimiento;
             $persona->direccion = $request->direccion;
@@ -198,7 +198,7 @@ class UserController extends Controller
         // if (!$request->ajax()) return redirect('/');
         $user = User::findOrFail($request->id);
         $user->condicion = '0';
-        $user->delete();
+        $user->save();
     }
 
     public function activar(Request $request)

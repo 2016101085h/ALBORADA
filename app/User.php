@@ -34,7 +34,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     protected $fillable = [
-        'id','rol_id', 'usuario', 'password', 'condicion'
+        'nombre','apellido','num_celular','dni','fech_nacimiento','sexo','rol_id', 'usuario', 'password', 'condicion'
     ];
     // $table->increments ('id');
     // $table->integer('rol_id')->unsigned();

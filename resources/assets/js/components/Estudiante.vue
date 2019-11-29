@@ -182,47 +182,72 @@
             </div>  -->
              
             <div class="form-group row">
-               <label class="col-md-3 form-control-label" for="email-input">Nombre del Estudiante</label>
-               <div class="col-md-9">
+               <div class="col-md-6">
+                 <label class="col-xs-3 form-control-label" for="email-input">Nombre del Estudiante</label>
+               <div class="col-xs-9">
                  <input type="text" v-model="nombre" class="form-control" placeholder="Ingrese el Nombre del Estudiante">
                </div>
-             </div> 
-            <div class="form-group row">
-               <label class="col-md-3 form-control-label" for="email-input">Apellido del Estudiante</label>
-               <div class="col-md-9">
+               </div>
+                  <div class="col-md-6">
+                       <label class="col-xs-3 form-control-label" for="email-input">Apellido del Estudiante</label>
+               <div class="col-xs-9">
                  <input type="text" @change="toUpper()" v-model="apellido" class="form-control" placeholder="Ingrese los Apellidos del Estudiante">
                </div>
+                  </div>
              </div> 
             <div class="form-group row">
-               <label class="col-md-3 form-control-label" for="email-input">Fecha de Nacimiento</label>
-               <div class="col-md-9">
-                 <input type="date" v-model="fech_nacimiento" class="form-control" placeholder="Ingrese la fecha de nacimiento del Estudiante">
+               <div class="col-md-6">
+                 <label class="col-xs-3 form-control-label" for="email-input">Nombre del Apoderado</label>
+               <div class="col-xs-9">
+                 <input type="text" v-model="nombre_apoderado" class="form-control" placeholder="Ingrese el Nombre del Estudiante">
                </div>
+               </div>
+                  <div class="col-md-6">
+                       <label class="col-xs-3 form-control-label" for="email-input">Apellido del Apoderado</label>
+               <div class="col-xs-9">
+                 <input type="text" @change="toUpperPadre()" v-model="apellido_apoderado" class="form-control" placeholder="Ingrese los Apellidos del Estudiante">
+               </div>
+                  </div>
              </div> 
            
+           
               <div class="form-group row">
-                <label class="col-md-3 form-control-label" for="text-input">Sexo</label>
-                <div class="col-md-9">
-                    <select v-model="sexo" class="form-control">
+                <div class="col-md-6">
+                  <label class="col-xs-3 form-control-label" for="text-input">Sexo</label>
+                <div class="col-xs-9">
+                    <!-- <select v-model="sexo" class="form-control">
                         <option value="sexo" disabled>Selecciona tu sexo</option>
                         <option value="masculino">Masculino</option>
                         <option value="femenino">Femenino</option>
                         
-                    </select>                                    
+                    </select>                                     -->
+                    <v-select v-model="sexo " :options="['masculino','femenino']" placeholder="Seleccione tu sexo"></v-select>
                 </div>
-            </div> 
-            <div class="form-group row">
-               <label class="col-md-3 form-control-label" for="email-input">DNI</label>
-               <div class="col-md-9">
+                </div>
+                <div class="col-md-6">
+                    <label class="col-xs-3 form-control-label" for="email-input">DNI</label>
+               <div class="col-xs-9">
                  <input type="number" v-model="dni" class="form-control" placeholder="Ingrese el Documento de Identidad del Estudiante">
                </div>
-             </div> 
+                </div>
+            </div> 
+           
               <div class="form-group row">
-               <label class="col-md-3 form-control-label" for="email-input">Dirección</label>
-               <div class="col-md-9">
+                <div class="col-md-6">
+                    <label class="col-xs-3 form-control-label" for="email-input">Fecha de Nacimiento</label>
+               <div class="col-xs-9">
+                 <input type="date" v-model="fech_nacimiento" class="form-control" placeholder="Ingrese la fecha de nacimiento del Estudiante">
+               </div>
+                </div>
+                  <div class="col-md-6">
+                        <label class="col-xs-3 form-control-label" for="email-input">Dirección</label>
+               <div class="col-xs-9">
                  <input type="text" v-model="direccion" class="form-control" placeholder="Ingrese la Dirección del Estudiante">
                </div>
+                  </div>
              </div> 
+             
+      
            
               <div v-show="errorEstudiante" class="form-group row div-error">
                 <div class="text-center text-error">
@@ -254,6 +279,8 @@
 </template>
 
 <script>
+ import vSelect from 'vue-select';
+  import 'vue-select/dist/vue-select.css';
 var moment = require('moment');
 moment().format();
     export default {
@@ -289,11 +316,17 @@ moment().format();
                 criterio:'grado',
                 buscar:'',
                 arrayAula:[],
+                nombre_apoderado:'',
+                apellido_apoderado:'',
+                
                
 
 
 
             }
+        },
+        components:{
+            vSelect
         },
         computed:{
             isActived: function(){
@@ -325,6 +358,9 @@ moment().format();
             toUpper(){
               let me = this;
               me.apellido = me.apellido.toUpperCase();
+            },
+            toUpperPadre(){
+              this.apellido_apoderado= this.apellido_apoderado.toUpperCase();
             },
             listarEstudiante(page,buscar,criterio){
                 let me= this;
@@ -387,6 +423,8 @@ moment().format();
                     'sexo':this.sexo,
                     'dni':this.dni,
                     'direccion':this.direccion,
+                    'nombre_apoderado':this.nombre_apoderado,
+                    'apellido_apoderado':this.apellido_apoderado
             
                 }
                 ).then(function (response){
@@ -540,7 +578,7 @@ moment().format();
                                 this.nombre='';
                                 this.apellido='';
                                 this.fech_nacimiento='';
-                                this.sexo='sexo';
+                                this.sexo='';
                                 this.dni=0;
                                 this.direccion='';
                                 

@@ -16,7 +16,7 @@
           <img src="img/usuario/{{Auth::user()->imagen}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block text-uppercase">{{ Auth::user()->usuario}} </a>
+          <a href="#" class="d-block text-uppercase">{{ Auth::user()->nombre.' '.Auth::user()->apellido}} </a>
           
         </div>
         
@@ -42,16 +42,11 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li @click="menu=11" class="nav-item">
+              
+              <li @click="menu=13" class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Competencias</p>
-                </a>
-              </li>
-              <li @click="menu=12" class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Alumnos</p>
+                  <p>Hijo</p>
                 </a>
               </li>
               

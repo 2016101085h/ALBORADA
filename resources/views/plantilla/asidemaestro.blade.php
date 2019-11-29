@@ -16,7 +16,7 @@
           <img src="img/usuario/{{Auth::user()->imagen}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block text-uppercase">{{ Auth::user()->usuario}}</a>
+          <a href="#" class="d-block text-uppercase">{{ Auth::user()->nombre.' '.Auth::user()->apellido}}</a>
           
         </div>
         

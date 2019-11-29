@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Estudiante;
+use App\{Estudiante, Padre, User, Persona};
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class EstudianteController extends Controller
 {
@@ -105,6 +107,9 @@ class EstudianteController extends Controller
             'estudiantes' => $estudiantes
         ];
     }
+
+    
+   
     /**
      * Store a newly created resource in storage.
      *
@@ -115,7 +120,7 @@ class EstudianteController extends Controller
     {
 
         // if(!$request->ajax()) return redirect('/');
-
+       
         $estudiante = new Estudiante();
         $estudiante->aula_id          = $request->aula_id;
         $estudiante->nombre          = $request->nombre;
@@ -126,6 +131,22 @@ class EstudianteController extends Controller
         $estudiante->direccion       = $request->direccion;
         $estudiante->condicion         = '1';
         $estudiante->save();
+
+        $padre = new Padre();
+        $padre->nombre=$request->nombre_apoderado;
+        $padre->apellido=$request->apellido_apoderado;
+        $padre->estudiante_id=$estudiante->id;
+        $padre->save();
+
+        
+
+        $user= new User();
+       
+        $user->usuario=$request->dni;
+        $user->password=bcrypt($request->dni);
+        $user->rol_id=3;
+        $user->save();
+    
     }
 
 

@@ -43,7 +43,7 @@ class NotaController extends Controller
             //     'to' => $notas->lastItem(),
             // ],
             'notas'    => $notas,
-          'periodos' => $periodos,
+            'periodos' => $periodos,
             'cursos' => $cursos,
              'aulas' => $aulas,
              'estudiantes' => $estudiantes,

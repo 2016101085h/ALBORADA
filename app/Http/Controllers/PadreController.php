@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Padre;
+use App\{Padre, Estudiante, Periodo, Competencia, Curso, MaestroAula, Maestro,Aula,Nota};
 
 class PadreController extends Controller
 {
@@ -17,58 +17,81 @@ class PadreController extends Controller
         // if (!$request->ajax()) return redirect('/');
         // $maestros = Maestro::all();
         // return $maestros;
-        $buscar = $request->buscar;
-        $criterio = $request->criterio;
-        if ($buscar == '') {
+        $aulas = Aula::all();
+        $periodos = Periodo::all();
+        $cursos = Curso::all();
 
-            $padres = Padre::join('estudiantes', 'padres.estudiante_id', '=', 'estudiantes.id')->join('notas','padres.nota_id','=','notas.id')
+            $padres = Padre::join('estudiantes', 'padres.estudiante_id', '=', 'estudiantes.id')
                 ->select(
                     'padres.id',
                     'padres.estudiante_id',
                     'estudiantes.nombre',
                     'estudiantes.apellido',
                     'estudiantes.dni',
-                    'notas.calificacion',
-                    'padres.fech_nacimiento',
+                    
+                   
                     'padres.dni',
-                    'padres.sexo',
-                    'padres.direccion',
+                    
+                  
                     'padres.condicion'
                 )
-                ->orderBy('padres.id', 'desc')->paginate(5);
-        } else {
-            $padres = Padre::join('aulas', 'padres.aula_id', '=', 'aulas.id')
-                ->select(
-                    'padres.id',
-                    'padres.aula_id',
-                    'aulas.grado',
-                    'aulas.seccion',
-                    'padres.nombre',
-                    'padres.apellido',
-                    'padres.fech_nacimiento',
-                    'padres.dni',
-                    'padres.sexo',
-                    'padres.direccion',
-                    'padres.condicion'
-                )
-                ->where('padres.' . $criterio, 'like', '%' . $buscar . '%')
-                ->orderBy('padres.id', 'desc')->paginate(2);
+                ->orderBy('padres.id', 'asc')->get();
+        
             // $padres = Padre::where($criterio, 'like', '%' . $buscar . '%')->orderBy('id', 'desc')->paginate(2);
-        }
+        
         return [
-            'pagination' => [
-                'total' => $padres->total(),
-                'current_page' => $padres->currentPage(),
-                'per_page' => $padres->perPage(),
-                'last_page' => $padres->lastPage(),
-                'from' => $padres->firstItem(),
-                'to' => $padres->lastItem(),
-            ],
-            'padres'    => $padres
+            
+            'padres'    => $padres,
+            'aulas' => $aulas,
+            'periodos' => $periodos,
+            'cursos' => $cursos,
         ];
     }
-
     
+        
+   
+
+    public function seleccionarNota(Request $request){
+        //Select Aula
+        $aulas = Aula::all();
+        //Select Cursos
+        $cursos = Curso::all();
+        //Select Alumno
+        $periodos = Periodo::all();
+        $curso_id = $request->curso_id;
+        $periodo_id = $request->periodo_id;
+        $aula_id = $request->aula_id;
+        $estudiante_id=$request->estudiante_id;
+        $estudiante_id=$request->estudiante_id;
+        $estudiantes = Estudiante::where('id', '=', $estudiante_id)->select('id', 'nombre', 'apellido')->orderBy('apellido', 'asc')->get();
+        $competencias = Competencia::where('competencias.curso_id', '=', $curso_id)->orderBy('id', 'asc')->get();
+
+        $notas = Nota::join('competencias', 'notas.competencia_id', '=', 'competencias.id')->join('estudiantes', 'notas.estudiante_id', '=', 'estudiantes.id')->
+        join('cursos', 'notas.curso_id', '=', 'cursos.id')->join('periodos', 'notas.periodo_id', '=', 'periodos.id')->
+        join('aulas', 'notas.aula_id', '=', 'aulas.id')->select('notas.estudiante_id', 'notas.calificacion')->
+        where('notas.curso_id', '=', $curso_id)->where('notas.aula_id', '=', $aula_id)->where('notas.periodo_id', '=', $periodo_id)->where('notas.estudiante_id','=',$estudiante_id)
+
+
+
+
+            ->orderBy('estudiantes.id', 'asc')->get();
+        return [
+            // 'pagination' => [
+            //     'total' => $notas->total(),
+            //     'current_page' => $notas->currentPage(),
+            //     'per_page' => $notas->perPage(),
+            //     'last_page' => $notas->lastPage(),
+            //     'from' => $notas->firstItem(),
+            //     'to' => $notas->lastItem(),
+            // ],
+            'notas'    => $notas,
+            'periodos' => $periodos,
+            'cursos' => $cursos,
+            'aulas' => $aulas,
+            'estudiantes' => $estudiantes,
+            'competencias' => $competencias
+        ];
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -81,16 +104,6 @@ class PadreController extends Controller
 
         // if(!$request->ajax()) return redirect('/');
 
-        $padre = new Estudiante();
-        $padre->aula_id          = $request->aula_id;
-        $padre->nombre          = $request->nombre;
-        $padre->apellido        = $request->apellido;
-        $padre->fech_nacimiento        = $request->fech_nacimiento;
-        $padre->sexo              = $request->sexo;
-        $padre->dni              = $request->dni;
-        $padre->direccion       = $request->direccion;
-        $padre->condicion         = '1';
-        $padre->save();
     }
 
 
@@ -103,40 +116,5 @@ class PadreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
-    {
-        // if(!$request->ajax()) return redirect('/');
-        $estudiante = Estudiante::findOrFail($request->id);
-        $estudiante->aula_id          = $request->aula_id;
-        $estudiante->nombre          = $request->nombre;
-        $estudiante->apellido        = $request->apellido;
-        $estudiante->fech_nacimiento        = $request->fech_nacimiento;
-        $estudiante->sexo              = $request->sexo;
-        $estudiante->dni              = $request->dni;
-        $estudiante->direccion       = $request->direccion;
-        $estudiante->condicion         = '1';
-        $estudiante->save();
-    }
-
-    public function desactivar(Request $request)
-    {
-        // if(!$request->ajax()) return redirect('/');    
-        $estudiante = Estudiante::findOrFail($request->id);
-        $estudiante->condicion = '0';
-        $estudiante->delete();
-    }
-
-    public function activar(Request $request)
-    {
-        // if(!$request->ajax()) return redirect('/');
-        $estudiante = Estudiante::findOrFail($request->id);
-        $estudiante->condicion = '1';
-        $estudiante->save();
-    }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
 }

@@ -16,7 +16,7 @@
           <img src="img/usuario/{{Auth::user()->imagen}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-inline-block mr-5 text-uppercase">{{ Auth::user()->usuario}}</a>
+          <a href="#" class="d-inline-block mr-5 text-uppercase">{{ Auth::user()->nombre.' '.Auth::user()->apellido}}</a>
           <a href="#" style="font-size:0.8rem"><i class="fa fa-circle text-success "></i> Online</a>
           
         </div>

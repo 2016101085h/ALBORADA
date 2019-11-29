@@ -35,6 +35,8 @@ Vue.component('estudiante', require('./components/Estudiante.vue').default);
  Vue.component('nota', require('./components/Nota.vue').default);
  Vue.component('calendario', require('./components/Calendario.vue').default);
  Vue.component('prueba', require('./components/Prueba.vue').default);
+ Vue.component('editar', require('./components/Editar.vue').default);
+ Vue.component('padre', require('./components/Padre.vue').default);
 // Vue.component('alumnoasignatura', require('./components/AlumnoAsignatura.vue').default);
 // Vue.component('maestroasignatura', require('./components/MaestroAsignatura.vue').default);
 

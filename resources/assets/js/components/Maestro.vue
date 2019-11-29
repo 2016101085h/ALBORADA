@@ -164,12 +164,13 @@
             <div class="form-group row">
                 <label class="col-md-3 form-control-label" for="text-input">Sexo</label>
                 <div class="col-md-9">
-                    <select v-model="sexo" class="form-control">
+                    <!-- <select v-model="sexo" class="form-control">
                         <option value="sexo" disabled>Selecciona tu sexo</option>
                         <option value="masculino">Masculino</option>
                         <option value="femenino">Femenino</option>
                         
-                    </select>                                    
+                    </select>                                     -->
+                    <v-select v-model="sexo " :options="['masculino','femenino']" placeholder="Seleccione tu sexo"></v-select>
                 </div>
             </div> 
              <!-- <div class="form-group row">
@@ -181,14 +182,15 @@
               <div class="form-group row">
                 <label class="col-md-3 form-control-label" for="text-input">Grado Académico</label>
                 <div class="col-md-9">
-                    <select v-model="grado_instruccion" class="form-control">
+                    <!-- <select v-model="grado_instruccion" class="form-control">
                         <option value="grado" disabled>Selecciona su Grado Académico</option>
                         <option value="Docente">Docente</option>
                         <option value="Auxiliar">Auxiliar</option>
                         <option value="Licenciado">Licenciado</option>  
                         <option value="Magister">Magister</option>
                         
-                    </select>                                    
+                    </select>       -->
+                    <v-select v-model="grado_instruccion" :options="['Docente','Auxiliar','Licenciado','Magister']" placeholder="Seleccione su Grado Academico"></v-select>                              
                 </div>
             </div> 
              <div class="form-group row">
@@ -238,6 +240,8 @@
 </template>
 
 <script>
+import vSelect from 'vue-select';
+    import 'vue-select/dist/vue-select.css';
 var moment = require('moment');
 moment().format()
     export default {
@@ -273,6 +277,9 @@ moment().format()
 
 
             }
+        },
+        components:{
+          vSelect
         },
         computed:{
             isActived: function(){
@@ -485,8 +492,8 @@ moment().format()
                                 this.nombre='';
                                 this.apellido='';
                                 this.fech_nacimiento='';
-                                this.sexo='sexo',
-                                this.grado_instruccion='grado',
+                                this.sexo='',
+                                this.grado_instruccion='',
                                 this.dni=0,
                                 this.direccion='',
                                 this.num_celular=0;

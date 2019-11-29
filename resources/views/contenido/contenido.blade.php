@@ -48,7 +48,7 @@
                <calendario></calendario>
             </template>
             <template v-if="menu==15">
-               <h1 class="content-wrapper">Contenido del menu 15</h1>
+               <editar></editar>
             </template>
             <template v-if="menu==16">
                <prueba></prueba>
@@ -73,7 +73,7 @@
             
             </template>
             <template v-if="menu==15">
-               <h1 class="content-wrapper">Contenido del menu 15</h1>
+                      <editar></editar>
             </template>
             <template v-if="menu==16">
                <h1 class="content-wrapper">Contenido del menu 16</h1>
@@ -86,13 +86,13 @@
                   <nota></nota>
             </template>
             <template v-if="menu==13">
-               <h1 class="content-wrapper">Contenido del menu 13</h1>
+               <padre></padre>
             </template>
             <template v-if="menu==14">
             
             </template>
             <template v-if="menu==15">
-               <h1 class="content-wrapper">Contenido del menu 15</h1>
+                      <editar></editar>
             </template>
             <template v-if="menu==16">
                <h1 class="content-wrapper">Contenido del menu 16</h1>

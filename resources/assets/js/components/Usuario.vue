@@ -55,7 +55,7 @@
                      <div  class="card card-secondary card-outline  bg-light " >
                       <div class="card-body box-profile">
                           <div class="text-center  p-2">
-                            <div class=" p-1" style="background-color:#00c0ef; border-radius:20px">
+                            <div class=" p-1 bg-info"   style="  border-radius:20px">
                                 <p class="text-center text-bold h4 text-uppercase text-white">{{persona.nombre +' '+persona.apellido}}</p>
                             <p style="margin-bottom:0px" class="text-muted">({{persona.rol}})</p>
                             </div>
@@ -189,12 +189,13 @@
              <div class="form-group row">
                 <label class="col-md-3 form-control-label" for="text-input">Sexo</label>
                 <div class="col-md-9">
-                    <select v-model="sexo" class="form-control">
+                    <!-- <select v-model="sexo" class="form-control">
                         <option value="sexo" disabled>Selecciona tu sexo</option>
                         <option value="masculino">Masculino</option>
                         <option value="femenino">Femenino</option>
                         
-                    </select>                                    
+                    </select>                                     -->
+                    <v-select v-model="sexo " :options="['masculino','femenino']" placeholder="Seleccione tu sexo"></v-select>
                 </div>
             </div> 
             <div class="form-group row">
@@ -258,6 +259,7 @@
                   
               </div>
             </div>
+
            
              
         
@@ -293,6 +295,8 @@
 </template>
 
 <script>
+import vSelect from 'vue-select';
+    import 'vue-select/dist/vue-select.css';
 var moment = require('moment');
 moment().format();
     export default {
@@ -335,6 +339,9 @@ moment().format();
 
 
             }
+        },
+        components:{
+          vSelect
         },
         computed:{
             isActived: function(){
@@ -428,7 +435,7 @@ moment().format();
                 me.listarPersona(page,buscar,criterio);
             },
             registrarPersona(){
-                 if (this.validarPersona()){
+                if (this.validarPersona()){
                     return;
                 }
                 let me=this;
@@ -596,7 +603,7 @@ moment().format();
                                 this.rol_id='0';
                                 this.nombre='';
                                 this.apellido='';
-                                this.sexo='sexo';
+                                this.sexo='';
                                 this.dni='';
                                 this.direccion='';
                                 this.fech_nacimiento='';
@@ -604,11 +611,7 @@ moment().format();
                                 this.usuario='';
                                 this.password='';
                                 this.imagen='';
-                               
-                                
-                                
-                               
-                               
+                            
                                 break;
                             }
                             case 'actualizar':
@@ -691,6 +694,9 @@ moment().format();
         position: absolute !important;
         top: 5rem;
         border-radius: 10px!important;
+        max-height: 800px!important;
+    overflow: auto!important;
+
     }
     .mostrar{
         display: list-item !important;
@@ -710,4 +716,5 @@ moment().format();
         color: red !important;
         font-weight: bold;
     }
+    
 </style>

@@ -17,17 +17,16 @@ class UserController extends Controller
         $criterio = $request->criterio;
 
         if ($buscar == '') {
-            $personas = User::join('personas', 'users.id', '=', 'personas.id')
-                ->join('rols', 'users.rol_id', '=', 'rols.id')
+            $personas = User::join('rols', 'users.rol_id', '=', 'rols.id')
                 ->select(
-                    'personas.id',
-                    'personas.nombre',
-                    'personas.apellido',
-                    'personas.sexo',
-                    'personas.direccion',
-                    'personas.dni',
-                    'personas.fech_nacimiento',
-                    'personas.num_celular',
+                    'users.id',
+                    'users.nombre',
+                    'users.apellido',
+                    'users.sexo',
+                    'users.direccion',
+                    'users.dni',
+                    'users.fech_nacimiento',
+                    'users.num_celular',
                     'users.usuario',
                     'users.password',
                     'users.condicion',
@@ -35,19 +34,18 @@ class UserController extends Controller
                     'users.imagen',
                     'rols.nombre as rol'
                 )
-                ->orderBy('personas.id', 'desc')->paginate(6);
+                ->orderBy('users.id', 'desc')->paginate(6);
         } else {
-            $personas = User::join('personas', 'users.id', '=', 'personas.id')
-                ->join('rols', 'users.rol_id', '=', 'rols.id')
+            $personas = User::join('rols', 'users.rol_id', '=', 'rols.id')
                 ->select(
-                    'personas.id',
-                    'personas.nombre',
-                    'personas.apellido',
-                    'personas.sexo',
-                    'personas.fech_nacimiento',
-                    'personas.direccion',
-                    'personas.dni',
-                    'personas.num_celular',
+                    'users.id',
+                    'users.nombre',
+                    'users.apellido',
+                    'users.sexo',
+                    'users.direccion',
+                    'users.dni',
+                    'users.fech_nacimiento',
+                    'users.num_celular',
                     'users.usuario',
                     'users.password',
                     'users.condicion',
@@ -55,9 +53,10 @@ class UserController extends Controller
                     'users.imagen',
                     'rols.nombre as rol'
                 )
-                ->where('personas.' . $criterio, 'like', '%' . $buscar . '%')
-                ->orderBy('personas.id', 'desc')->paginate(5);
+                ->where('users.' . $criterio, 'like', '%' . $buscar . '%')
+                ->orderBy('users.id', 'desc')->paginate(5);
         }
+
 
 
         return [
@@ -77,25 +76,24 @@ class UserController extends Controller
     {
         // if (!$request->ajax()) return redirect('/');
 
-        try {
-            DB::beginTransaction();
-            $persona = new Persona();
-            $persona->nombre = $request->nombre;
-            $persona->apellido = $request->apellido;
-            $persona->sexo = $request->sexo;
-            $persona->fech_nacimiento = $request->fech_nacimiento;
-            $persona->direccion = $request->direccion;
-            $persona->num_celular = $request->num_celular;
-            $persona->dni = $request->dni;
-            $persona->save();
+      
+            $user = new user();
+            $user->nombre = $request->nombre;
+            $user->apellido = $request->apellido;
+            $user->sexo = $request->sexo;
+            $user->fech_nacimiento = $request->fech_nacimiento;
+            $user->direccion = $request->direccion;
+            $user->num_celular = $request->num_celular;
+            $user->dni = $request->dni;
+           
 
-            $user = new User();
+          
             $user->usuario = $request->usuario;
             $user->password = bcrypt($request->password);
             $user->condicion = '1';
             $user->rol_id = $request->rol_id;
 
-            $user->id = $persona->id;
+            
 
 
             $exploded = explode(',', $request->imagen);
@@ -121,38 +119,44 @@ class UserController extends Controller
 
             $user->save();
 
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-        }
+        
+      
+    }
+
+    public function auth_user() {
+        $user = User::findOrFail(\Auth::user()->id);
+        return [
+            'user_auth' => $user
+        ];
     }
 
     public function update(Request $request)
     {
         // if (!$request->ajax()) return redirect('/');
 
-        try {
-            DB::beginTransaction();
+      
 
             //Buscar primero el proveedor a modificar
             $user = User::findOrFail($request->id);
 
-            $persona = Persona::findOrFail($user->id);
 
-            $persona->nombre = $request->nombre;
-            $persona->apellido = $request->apellido;
-            $persona->sexo = $request->sexo;
-            $persona->fech_nacimiento = $request->fech_nacimiento;
-            $persona->direccion = $request->direccion;
-            $persona->num_celular = $request->num_celular;
-            $persona->dni = $request->dni;
-            $persona->save();
+
+            $user->nombre = $request->nombre;
+            $user->apellido = $request->apellido;
+            $user->sexo = $request->sexo;
+            $user->fech_nacimiento = $request->fech_nacimiento;
+            $user->direccion = $request->direccion;
+            $user->num_celular = $request->num_celular;
+            $user->dni = $request->dni;
+
 
 
             $user->usuario = $request->usuario;
+            $user->rol_id=$request->rol_id;
             $user->password = bcrypt($request->password);
             $user->condicion = '1';
-            $user->rol_id = $request->rol_id;
+
+
             $currentPhoto = $user->imagen;
 
             if ($request->imagen != $currentPhoto) {
@@ -187,10 +191,7 @@ class UserController extends Controller
             $user->save();
 
 
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-        }
+      
     }
 
     public function desactivar(Request $request)

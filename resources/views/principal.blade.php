@@ -139,7 +139,7 @@
        <li class="user-menu nav-item dropdown mt-2 ml-3">
          <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="#menu">
            <img src="img/usuario/{{Auth::user()->imagen}}" class="user-image" alt="User Image">
-           <span class="text-dark text-uppercase">{{ Auth::user()->usuario}} </span>
+           <span class="text-dark text-uppercase">{{ Auth::user()->nombre.' '.Auth::user()->apellido}} </span>
          </a>
           <!-- <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <span class="dropdown-item dropdown-header">15 Notifications</span>
@@ -167,7 +167,7 @@
            <img src="img/usuario/{{Auth::user()->imagen}}" class="img-circle" alt="User Image">
 
              <p class="text-uppercase">
-               {{ Auth::user()->usuario}}
+               {{ Auth::user()->nombre.''.Auth::user()->apeliido}}
                <small>Member since Nov. 2012</small>
              </p>
            </li>
@@ -189,7 +189,7 @@
            <!-- Menu Footer-->
            <li class="user-footer">
              <div class="pull-left">
-               <a href="#" class="btn btn-info float-left"><i class="far fa-id-badge mr-1 "></i> Profile</a>
+               <a href="#" @click="menu=15" class="btn btn-info float-left"><i class="far fa-id-badge mr-1 "></i> Perfil</a>
              </div>
              <div class="pull-right">
                <a href="{{ route('logout')}} " onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-danger float-right"><i class="fas fa-sign-out-alt mr-1"></i> Cerrar Sesión</a>
